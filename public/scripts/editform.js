@@ -26,7 +26,7 @@ function formValidation() {
 
     const search = `?name=${inputName.value}&gender=${inputGender.value}`;
 
-    const res = await fetch(`/api/update/user/${id}${search}`);
+    const res = await fetch(`/api/update/users.html`);
     const response = await res.json();
     console.log(response);
   });
