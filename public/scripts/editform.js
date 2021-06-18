@@ -35,7 +35,7 @@ function validateForm() {
         }
         const search = `?name=${name.value}&gender=${gender.value}`;
 
-        await fetch(`${window.location.pathname}${search}`);
+        await fetch(`${window.location.pathname}`);
         window.location.pathname = '/users.html';
     });
 }
