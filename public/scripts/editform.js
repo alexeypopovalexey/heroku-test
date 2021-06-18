@@ -37,7 +37,10 @@ function main() {
       }
     })
 
-  await fetch(`http://localhost:9090/users.html`);
+  const search = `?name=${inputName.value}&gender=${inputGender.value}`;
+
+    await fetch(`${window.location.pathname}${search}`);
+    window.location.pathname = '/users.html';
     
     
   });
