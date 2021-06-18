@@ -1,49 +1,35 @@
-function main() {
+function formValidation() {
   const form = document.querySelector('form');
-  const userName = document.querySelector('[name="name"]');
-  const userGender = document.querySelector('[name="gender"]');
-  const arrInputs = Array.from(form.querySelectorAll('.form-control'));
+  const inputName = form.querySelector('.name');
+  const inputGender = form.querySelector('.gender');
+  const allInputs = Array.from(form.querySelectorAll('.form-control'));
 
-  form.addEventListener('submit', async (event) => {
+  form.addEventListener('submit', async function (event) {
     event.preventDefault();
+    const regExpForName = /^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)/;
+    const emptyElement = allInputs.find((input) => !input.value);
+    if (emptyElement) {
+      emptyElement.classList.add('is-invalid');
+      emptyElement.placeholder = 'This input field shouldn\'t be empty';
+      return;
+    }
+    if (!regExpForName.test(inputName.value)) {
+      inputName.classList.add('is-invalid');
+      return;
+    }
 
-    const volidName = /^([A-Za-z])/;
+    if (inputGender.value !== 'female' && inputGender.value !== 'male') {
+      inputGender.classList.add('is-invalid');
+      return;
+    }
+    const id = window.location.pathname.split('/').pop();
 
-    arrInputs.forEach((element) => {
+    const search = `?name=${inputName.value}&gender=${inputGender.value}`;
 
-      if (!element.value) {
-        element.classList.add('is-invalid');
-        element.placeholder = 'This is not volid'
-        return
-      }
-
-      if (element === userName) {
-        if (!volidName.test(userName.value)) {
-          element.classList.add('is-invalid');
-          alert(`Your name isn't volid`)
-          return
-        }
-      }
-
-      if (element === userGender) {
-        if (userGender.value !== 'female' && userGender.value !== 'male') {
-        element.classList.add('is-invalid');
-        alert(`Your gender isn't volid`)
-        return
-      }
-      }
-      if (element.value) {
-        element.classList.remove('is-invalid');
-      }
-    })
-
-  const search = `?name=${inputName.value}&gender=${inputGender.value}`;
-
-    await fetch(`${window.location.pathname}${search}`);
-    window.location.pathname = '/users.html';
-    
-    
+    const res = await fetch(`/api/update/user/${id}${search}`);
+    const response = await res.json();
+    console.log(response);
   });
 }
 
-window.addEventListener('load', main);  
+window.addEventListener('load', formValidation); 
