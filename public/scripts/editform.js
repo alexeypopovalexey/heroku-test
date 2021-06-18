@@ -1,32 +1,46 @@
-function formValidation() {
+function main() {
   const form = document.querySelector('form');
-  const inputName = form.querySelector('.name');
-  const inputGender = form.querySelector('.gender');
-  const allInputs = Array.from(form.querySelectorAll('.form-control'));
+  const userName = document.querySelector('[name="name"]');
+  const userGender = document.querySelector('[name="gender"]');
+  const arrInputs = Array.from(form.querySelectorAll('.form-control'));
 
-  form.addEventListener('submit', async function (event) {
+  form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const regExpForName = /^([a-zA-Z]{2,}\s[a-zA-Z]{1,}'?-?[a-zA-Z]{2,}\s?([a-zA-Z]{1,})?)/;
-    const emptyElement = allInputs.find((input) => !input.value);
-    if (emptyElement) {
-      emptyElement.classList.add('is-invalid');
-      emptyElement.placeholder = 'This input field shouldn\'t be empty';
-      return;
-    }
-    if (!regExpForName.test(inputName.value)) {
-      inputName.classList.add('is-invalid');
-      return;
-    }
 
-    if (inputGender.value !== 'female' && inputGender.value !== 'male') {
-      inputGender.classList.add('is-invalid');
-      return;
-    }
-  
+    const volidName = /^([A-Za-z])/;
 
-  await fetch(`/api/update/users.html`);
+    arrInputs.forEach((element) => {
+
+      if (!element.value) {
+        element.classList.add('is-invalid');
+        element.placeholder = 'This is not volid'
+        return
+      }
+
+      if (element === userName) {
+        if (!volidName.test(userName.value)) {
+          element.classList.add('is-invalid');
+          alert(`Your name isn't volid`)
+          return
+        }
+      }
+
+      if (element === userGender) {
+        if (userGender.value !== 'female' && userGender.value !== 'male') {
+        element.classList.add('is-invalid');
+        alert(`Your gender isn't volid`)
+        return
+      }
+      }
+      if (element.value) {
+        element.classList.remove('is-invalid');
+      }
+    })
+
+  await fetch(`users.html`);
+    
     
   });
 }
 
-window.addEventListener('load', formValidation); 
+window.addEventListener('load', main);
