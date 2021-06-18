@@ -39,7 +39,7 @@ function main() {
 
   const id = window.location.pathname.split('/').pop();
 
-    const search = `?name=${inputName.value}&gender=${inputGender.value}`;
+    const search = `?name=${userName.value}&gender=${userGender.value}`;
 
     const res = await fetch(`/api/update/user/${id}${search}`);
     const response = await res.json();
