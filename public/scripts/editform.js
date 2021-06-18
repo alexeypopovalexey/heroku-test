@@ -37,14 +37,10 @@ function main() {
       }
     })
 
-  const id = window.location.pathname.split('/').pop();
+  const search = `?name=${name.value}&gender=${gender.value}`;
 
-    const search = `?name=${userName.value}&gender=${userGender.value}`;
-
-    const res = await fetch(`/api/update/user/${id}${search}`);
-    const response = await res.json();
-    console.log(response);
-
+        await fetch(`${window.location.pathname}${search}`);
+        window.location.pathname = '/users.html';
 
   });
 }
