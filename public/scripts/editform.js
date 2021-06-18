@@ -37,7 +37,7 @@ function main() {
       }
     })
 
-  await fetch(`http://localhost:9090/userList.html`);
+  await fetch(`http://localhost:9090/users.html`);
     
     
   });
