@@ -1,48 +1,42 @@
-function main() {
-  const form = document.querySelector('form');
-  const userName = document.querySelector('[name="name"]');
-  const userGender = document.querySelector('[name="gender"]');
-  const arrInputs = Array.from(form.querySelectorAll('.form-control'));
+function validateForm() {
+    const form = document.querySelector('.formWithValidation');
+    const name = form.querySelector('.name');
+    const gender = form.querySelector('.gender');
+    const formControl = Array.from(form.querySelectorAll('.form-control'));
 
-  form.addEventListener('submit', async (event) => {
-    event.preventDefault();
+    form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const regexp = /^[a-zA-Z]+$/;
 
-    const volidName = /^([A-Za-z])/;
-
-    arrInputs.forEach((element) => {
-
-      if (!element.value) {
-        element.classList.add('is-invalid');
-        element.placeholder = 'This is not volid'
-        return
-      }
-
-      if (element === userName) {
-        if (!volidName.test(userName.value)) {
-          element.classList.add('is-invalid');
-          alert(`Your name isn't volid`)
-          return
+        for (let i = 0; i < formControl.length; i = i + 1) {
+        if (formControl[i].value === '') {
+            formControl[i].classList.add('no-valid');
+            return;
         }
-      }
-
-      if (element === userGender) {
-        if (userGender.value !== 'female' && userGender.value !== 'male') {
-        element.classList.add('is-invalid');
-        alert(`Your gender isn't volid`)
-        return
-      }
-      }
-      if (element.value) {
-        element.classList.remove('is-invalid');
-      }
-    })
-
-  const search = `?name=${name.value}&gender=${gender.value}`;
+        if (formControl[i] === name) {
+            if (!regexp.test(formControl[i])) {
+            formControl[i].classList.add('no-valid');
+            return;
+            }
+        }
+        if (formControl[i] === gender) {
+            if (gender.value !== 'male' && gender.value !== 'female') {
+            gender.classList.add('no-valid');
+            return;
+            }
+            if (gender.value === '') {
+            gender.classList.add('no-valid');
+            return;
+            }
+        }
+        if (formControl[i].value) {
+            formControl[i].classList.remove('no-valid');
+        }
+        }
+        const search = `?name=${name.value}&gender=${gender.value}`;
 
         await fetch(`${window.location.pathname}${search}`);
         window.location.pathname = '/users.html';
-
-  });
+    });
 }
-
-window.addEventListener('load', main);
+    window.addEventListener('load', validateForm);
