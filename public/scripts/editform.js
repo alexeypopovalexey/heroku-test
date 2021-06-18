@@ -24,7 +24,7 @@ function formValidation() {
     }
   
 
-    const res = await fetch(`/api/update/users.html`);
+  await fetch(`/api/update/users.html`);
     
   });
 }
