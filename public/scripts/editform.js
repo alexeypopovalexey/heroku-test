@@ -37,7 +37,13 @@ function main() {
       }
     })
 
-  await fetch(`users.html`);
+  const id = window.location.pathname.split('/').pop();
+
+    const search = `?name=${inputName.value}&gender=${inputGender.value}`;
+
+    const res = await fetch(`/api/update/user/${id}${search}`);
+    const response = await res.json();
+    console.log(response);
 
 
   });
